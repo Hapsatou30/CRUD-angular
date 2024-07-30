@@ -1,45 +1,49 @@
-import { Injectable } from '@angular/core'; 
-import { HttpClient } from '@angular/common/http'; // Importation de HttpClient pour effectuer des requêtes HTTP
-import { Observable } from 'rxjs'; // Importation d'Observable pour gérer les réponses asynchrones
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root' // Déclaration du service comme étant disponible dans toute l'application
+  providedIn: 'root'
 })
 export class CrudService {
 
-  // URL de l'API JSONPlaceholder pour les articles
   private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
-  // Injection du HttpClient dans le constructeur pour effectuer des requêtes HTTP
   constructor(private http: HttpClient) {}
 
-  // Méthode pour récupérer tous les articles
-  // Retourne un Observable contenant un tableau d'articles
   getArticles(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl); // Effectue une requête GET pour obtenir tous les articles
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  // Méthode pour récupérer un article spécifique par son identifiant
-  // Retourne un Observable contenant un article
   getArticle(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`); // Effectue une requête GET pour obtenir un article par son ID
+    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  // Méthode pour créer un nouvel article
-  // Prend en paramètre un objet article et retourne un Observable contenant l'article créé
   createArticle(article: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, article); // Effectue une requête POST pour créer un nouvel article
+    return this.http.post<any>(this.apiUrl, article).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  // Méthode pour mettre à jour un article existant
-  // Prend en paramètre l'ID de l'article et l'objet article mis à jour, retourne un Observable contenant l'article mis à jour
   updateArticle(id: number, article: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, article); // Effectue une requête PUT pour mettre à jour l'article avec l'ID spécifié
+    return this.http.put<any>(`${this.apiUrl}/${id}`, article).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  // Méthode pour supprimer un article
-  // Prend en paramètre l'ID de l'article à supprimer et retourne un Observable de la réponse de la suppression
   deleteArticle(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`); // Effectue une requête DELETE pour supprimer l'article avec l'ID spécifié
+    return this.http.delete<any>(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    console.error('An error occurred:', error.message);
+    return throwError('Something went wrong; please try again later.');
   }
 }

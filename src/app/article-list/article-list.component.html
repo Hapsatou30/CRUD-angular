@@ -1,0 +1,36 @@
+<div class="container">
+  <h2>Article List</h2>
+
+  <!-- Formulaire d'ajout/modification d'article -->
+  <form [formGroup]="articleForm" (ngSubmit)="addArticle()">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title:</label>
+      <input id="title" formControlName="title" class="form-control" />
+      <div *ngIf="articleForm.controls['title'].invalid && articleForm.controls['title'].touched">
+        <span *ngIf="articleForm.controls['title'].errors?.['required']" class="text-danger">Title is required.</span>
+        <span *ngIf="articleForm.controls['title'].errors?.['minlength']" class="text-danger">Title must be at least 5 characters long.</span>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="body" class="form-label">Body:</label>
+      <textarea id="body" formControlName="body" class="form-control"></textarea>
+      <div *ngIf="articleForm.controls['body'].invalid && articleForm.controls['body'].touched">
+        <span *ngIf="articleForm.controls['body'].errors?.['required']" class="text-danger">Body is required.</span>
+        <span *ngIf="articleForm.controls['body'].errors?.['minlength']" class="text-danger">Body must be at least 10 characters long.</span>
+      </div>
+    </div>
+    <button type="submit" [disabled]="articleForm.invalid" class="btn btn-primary">{{ isEditMode ? 'Update Article' : 'Add Article' }}</button>
+    <button type="button" (click)="resetForm()" class="btn btn-secondary ms-2">Reset</button>
+  </form>
+
+  <!-- Liste des articles -->
+  <ul class="list-group mt-4">
+    <li *ngFor="let article of articles" class="list-group-item d-flex justify-content-between align-items-center">
+      <a [routerLink]="['/details', article.id]" class="text-decoration-none text-primary">{{ article.title }}</a>
+      <div>
+        <button (click)="editArticle(article)" class="btn btn-warning btn-sm me-2">Edit</button>
+        <button (click)="deleteArticle(article.id)" class="btn btn-danger btn-sm">Delete</button>
+      </div>
+    </li>
+  </ul>
+</div>
