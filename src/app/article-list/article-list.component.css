@@ -1,3 +1,4 @@
+/* Styles généraux */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -20,9 +21,11 @@ form {
   height: auto;
   border-radius: 8px;
 }
-input, textarea{
+
+input, textarea {
   border-bottom: 1px solid #42009E;
 }
+
 .table {
   background-color: #ffffff;
   margin-top: 20px;
@@ -40,10 +43,12 @@ input, textarea{
 .text-danger {
   font-size: 0.875rem;
 }
-.btn-primary{
+
+.btn-primary {
   background-color: #42009E;
   border-color: #42009E;
 }
+
 button {
   transition: background-color 0.3s ease;
 }
@@ -57,30 +62,38 @@ button:hover {
   min-width: 100px;
   margin-top: 10px;
 }
+
 .btn i {
   font-size: 20px;
 }
-h1{
+
+h1 {
   color: #42009E;
 }
-th{
+
+th {
   font-size: 20px;
 }
-td  {
+
+td {
   color: #000000;
   font-size: 18px;
 }
-.update{
+
+.update {
   color: #42009E;
 }
-.delete{
+
+.delete {
   color: red;
   background-color: transparent;
 }
-.delete:hover{
+
+.delete:hover {
   color: red;
   background-color: transparent;
 }
+
 .floating-label {
   position: relative;
 }
@@ -108,8 +121,60 @@ td  {
 .floating-label textarea:not(:placeholder-shown) ~ label {
   top: 0;
   left: 0;
-  font-size:18px;
+  font-size: 18px;
   color: #42009E; /* Couleur de votre choix */
   background-color: #ffffff; /* Couleur de fond pour le label flottant */
   padding: 0 4px; /* Espace autour du texte du label */
+}
+
+/* Styles pour les écrans mobiles */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  h2, h3 {
+    font-size: 1.5rem; /* Réduit la taille des titres */
+  }
+
+  form {
+    padding: 15px;
+  }
+
+  .btn-primary {
+    padding: 10px 20px; /* Ajuste le padding des boutons */
+  }
+
+  .table th,
+  .table td {
+    font-size: 16px; /* Réduit la taille de la police dans la table */
+  }
+
+  .btn i {
+    font-size: 18px; /* Réduit la taille des icônes */
+  }
+
+  .form-btn {
+    min-width: auto; /* Ajuste la largeur minimale pour les boutons */
+  }
+}
+
+@media (max-width: 576px) {
+  h2, h3 {
+    font-size: 1.2rem; /* Réduit encore plus la taille des titres */
+  }
+
+  .table th,
+  .table td {
+    font-size: 14px; /* Réduit encore plus la taille de la police dans la table */
+  }
+
+  .btn i {
+    font-size: 16px; /* Réduit encore plus la taille des icônes */
+  }
+
+  .form-btn {
+    min-width: 100%; /* Les boutons prennent toute la largeur */
+    text-align: center; /* Centrer le texte dans les boutons */
+  }
 }
