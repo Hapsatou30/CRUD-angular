@@ -1,7 +1,13 @@
-<div *ngIf="article" class="card mt-4">
-  <div class="card-body">
-    <h2 class="card-title">{{ article.title }}</h2>
-    <p class="card-text">{{ article.body }}</p>
-    <a routerLink="/" class="btn btn-primary">Back to List</a>
+<div class="article-container" *ngIf="article">
+  <h1>{{ article.title }}</h1>
+  <p>{{ article.body }}</p>
+
+  <h2 class="comments-title">Commentaires</h2>
+  <div class="comment" *ngFor="let comment of comments">
+    <h3>{{ comment.name }}</h3>
+    <p>{{ comment.body }}</p>
+    <p><strong>Par:</strong> {{ comment.email }}</p>
   </div>
 </div>
+
+<a routerLink="/" class="btn btn-primary">Back to List</a>
