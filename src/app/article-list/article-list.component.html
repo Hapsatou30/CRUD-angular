@@ -1,0 +1,72 @@
+<div class="container mt-5">
+  <div class="row d-flex align-items-center mb-5">
+    <div class="col-md-6">
+      <!-- Formulaire d'ajout/modification d'article -->
+      <h2>Formulaire </h2>
+      <form [formGroup]="articleForm" (ngSubmit)="addArticle()">
+        <div class="mb-3">
+          <div class="floating-label">
+            <input id="title" formControlName="title" class="form-control" placeholder=" " />
+            <label for="title">Titre</label>
+          </div>
+          <div *ngIf="articleForm.controls['title'].invalid && articleForm.controls['title'].touched">
+            <span *ngIf="articleForm.controls['title'].errors?.['required']" class="text-danger">Titre est obligatoire.</span>
+            <span *ngIf="articleForm.controls['title'].errors?.['minlength']" class="text-danger">Titre doit contenir au moins 5 caracteres.</span>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="floating-label">
+            <textarea id="body" formControlName="body" class="form-control" placeholder=" "></textarea>
+            <label for="body">Contenu</label>
+          </div>
+          <div *ngIf="articleForm.controls['body'].invalid && articleForm.controls['body'].touched">
+            <span *ngIf="articleForm.controls['body'].errors?.['required']" class="text-danger">Contenu est obligatoire.</span>
+            <span *ngIf="articleForm.controls['body'].errors?.['minlength']" class="text-danger">Contenu doit avoir au moins 10 caractères.</span>
+          </div>
+        </div>
+        <div class="bouton d-flex align-items-center justify-content-between">
+          <button type="submit" [disabled]="articleForm.invalid" class="btn btn-primary form-btn">{{ isEditMode ? 'Modifier ' : 'Ajouter ' }}</button>
+          <button type="button" (click)="resetForm()" class="btn btn-secondary form-btn">réinitialiser</button>  
+        </div>
+        </form>
+       
+    </div>
+    <div class="col-md-6 d-flex align-items-center">
+      <img src="assets/images/post.png" alt="Description Image" class="img-fluid">
+    </div>    
+  </div>  
+
+  <!-- Liste des articles -->
+  <h1 class="text-center">La liste des articles</h1>
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let article of articles">
+        <td>
+          {{ article.title }}
+        </td>
+        <td>
+          <!-- Lien vers les détails -->
+          <a [routerLink]="['/details', article.id]" class="btn  btn-sm me-2" title="Voir Details">
+            <i class="fas fa-info-circle"></i>
+          </a>
+          <!-- Bouton d'édition -->
+          <button (click)="editArticle(article)" class="btn update btn-sm me-2" title="Modifier">
+            <i class="fas fa-edit"></i>
+          </button>
+          <!-- Bouton de suppression -->
+          <button (click)="deleteArticle(article.id)" class="btn delete btn-sm" title="supprimer">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+</div>

@@ -1,12 +1,24 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import { ArticleListComponent } from './article-list/article-list.component';
+import { ArticleDetailComponent } from './article-detail/article-detail.component';
+import { ArticleFormComponent } from './article-form/article-form.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [
+    RouterOutlet,
+    HttpClientModule, // Assurez-vous d'importer HttpClientModule ici
+    ReactiveFormsModule,
+    ArticleListComponent,
+    ArticleDetailComponent,
+    ArticleFormComponent
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'CRUD-angular';
