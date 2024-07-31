@@ -18,6 +18,12 @@ export class CrudService {
     );
   }
 
+  getArticlesByUser(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}?userId=${userId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getArticle(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
       catchError(this.handleError)

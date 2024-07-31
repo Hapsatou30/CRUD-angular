@@ -19,6 +19,7 @@ export class ArticleListComponent implements OnInit {
   articleForm: FormGroup; // Formulaire pour ajouter ou éditer un article
   isEditMode = false; // Indique si le formulaire est en mode édition
   articleId: number | null = null; // ID de l'article en cours d'édition
+  userId = 1; // ID de l'utilisateur
 
   constructor(
     private crudService: CrudService, // Service pour gérer les opérations CRUD
@@ -36,9 +37,9 @@ export class ArticleListComponent implements OnInit {
     this.loadArticles(); // Charger les articles au démarrage
   }
 
-  // Méthode pour charger les articles depuis le service
+  // Méthode pour charger les articles de l'utilisateur depuis le service
   loadArticles(): void {
-    this.crudService.getArticles().subscribe(
+    this.crudService.getArticlesByUser(this.userId).subscribe(
       (articles) => {
         this.articles = articles;
       },
