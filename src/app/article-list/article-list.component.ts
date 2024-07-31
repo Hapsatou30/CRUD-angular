@@ -43,7 +43,7 @@ export class ArticleListComponent implements OnInit {
       (articles) => {
         this.articles = articles;
       },
-      (error) => {
+      (error) => { 
         console.error('Erreur lors de la récupération des articles:', error);
       }
     );
