@@ -1,6 +1,6 @@
 /* Styles pour le conteneur principal de l'article */
 .article-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -76,7 +76,7 @@
   font-size: 1em;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-left: 4%;
+ 
 }
 
 .btn:hover {
