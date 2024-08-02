@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-article-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule,RouterModule],
   templateUrl: './article-list.component.html',
   styleUrls: ['./article-list.component.css']
 })
@@ -40,17 +40,27 @@ export class ArticleListComponent implements OnInit {
   loadArticles(): void {
     this.crudService.getArticles().subscribe(
       (articles) => {
+        console.log('Articles récupérés:', articles);
         this.articles = articles;
       },
       (error) => {
         console.error('Erreur lors de la récupération des articles:', error);
+        Swal.fire({
+          title: 'Erreur',
+          text: 'Erreur lors de la récupération des articles.',
+          icon: 'error',
+          timer: 2000,
+          showConfirmButton: false
+        });
       }
     );
   }
+  
 
   // Méthode pour ajouter ou mettre à jour un article
   addArticle(): void {
     if (this.articleForm.valid) {
+      console.log('Formulaire:', this.articleForm.value); // Déboguer
       if (this.isEditMode && this.articleId !== null) {
         this.crudService.updateArticle(this.articleId, this.articleForm.value).subscribe(
           (updatedArticle) => {
@@ -64,7 +74,7 @@ export class ArticleListComponent implements OnInit {
               title: 'Article mis à jour!',
               text: 'L\'article a été mis à jour avec succès.',
               icon: 'success',
-              timer: 2000, // Affiche l'alerte pendant 2 secondes
+              timer: 2000,
               showConfirmButton: false
             });
           },
@@ -74,7 +84,7 @@ export class ArticleListComponent implements OnInit {
               title: 'Erreur',
               text: 'Erreur lors de la mise à jour de l\'article.',
               icon: 'error',
-              timer: 2000, // Affiche l'alerte pendant 2 secondes
+              timer: 2000,
               showConfirmButton: false
             });
           }
@@ -82,13 +92,14 @@ export class ArticleListComponent implements OnInit {
       } else {
         this.crudService.createArticle(this.articleForm.value).subscribe(
           (newArticle) => {
+            console.log('Nouvel article:', newArticle); // Déboguer
             this.articles.unshift(newArticle); // Ajouter le nouvel article au début de la liste
             this.resetForm(); // Réinitialiser le formulaire
             Swal.fire({
               title: 'Article ajouté!',
               text: 'L\'article a été ajouté avec succès.',
               icon: 'success',
-              timer: 2000, // Affiche l'alerte pendant 2 secondes
+              timer: 2000,
               showConfirmButton: false
             });
           },
@@ -98,7 +109,7 @@ export class ArticleListComponent implements OnInit {
               title: 'Erreur',
               text: 'Erreur lors de la création de l\'article.',
               icon: 'error',
-              timer: 2000, // Affiche l'alerte pendant 2 secondes
+              timer: 2000,
               showConfirmButton: false
             });
           }
@@ -126,7 +137,7 @@ export class ArticleListComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Oui, supprimer!',
       cancelButtonText: 'Annuler',
-      timer: 3000, // Affiche l'alerte pendant 3 secondes
+      timer: 3000,
       showConfirmButton: true
     }).then((result) => {
       if (result.isConfirmed) {
@@ -138,7 +149,7 @@ export class ArticleListComponent implements OnInit {
               title: 'Supprimé!',
               text: 'L\'article a été supprimé.',
               icon: 'success',
-              timer: 2000, // Affiche l'alerte pendant 2 secondes
+              timer: 2000,
               showConfirmButton: false
             });
           },
@@ -148,7 +159,7 @@ export class ArticleListComponent implements OnInit {
               title: 'Erreur',
               text: 'Erreur lors de la suppression de l\'article.',
               icon: 'error',
-              timer: 2000, // Affiche l'alerte pendant 2 secondes
+              timer: 2000,
               showConfirmButton: false
             });
           }

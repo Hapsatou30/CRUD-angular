@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class CrudService {
 
-  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private apiUrl = 'http://localhost:8000/api/articles';
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +17,7 @@ export class CrudService {
       catchError(this.handleError)
     );
   }
+  
 
   getArticle(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
@@ -25,6 +26,7 @@ export class CrudService {
   }
 
   createArticle(article: any): Observable<any> {
+    console.log('Creating article:', article); // Ajoutez un log pour vérifier les données envoyées
     return this.http.post<any>(this.apiUrl, article).pipe(
       catchError(this.handleError)
     );
