@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
-import { ArticleFormComponent } from './article-form/article-form.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +14,6 @@ import { ArticleFormComponent } from './article-form/article-form.component';
     ReactiveFormsModule,
     ArticleListComponent,
     ArticleDetailComponent,
-    ArticleFormComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

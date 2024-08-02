@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class CrudService {
 
-  private apiUrl = 'https://api.thiamhapstou.simplonfabriques.com/api/articles';
+  private apiUrl = 'http://127.0.0.1:8000/api/articles';
 
   constructor(private http: HttpClient) {}
 
