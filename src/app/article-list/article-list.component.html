@@ -1,4 +1,18 @@
 <div class="container mt-5">
+  <!-- Affichage du nom de l'utilisateur connecté -->
+  <div *ngIf="userName" class="row justify-content-start mb-3">
+    <div class="col-auto">
+      <span>Bienvenue, {{ userName }}!</span>
+    </div>
+  </div>
+  
+  <!-- Bouton de déconnexion -->
+  <div class="row justify-content-end mb-3">
+    <div class="col-auto">
+      <button (click)="logout()" class="btn btn-danger">Déconnexion</button>
+    </div>
+  </div>
+
   <div class="row d-flex align-items-center mb-5">
     <div class="col-md-6 col-12 mb-4 mb-md-0">
       <!-- Formulaire d'ajout/modification d'article -->
@@ -51,7 +65,7 @@
         </td>
         <td>
           <!-- Lien vers les détails -->
-          <a [routerLink]="['/details', article.id]" class="btn  btn-sm me-2" title="Voir Détails">
+          <a [routerLink]="['/details', article.id]" class="btn btn-sm me-2" title="Voir Détails">
             <i class="fas fa-info-circle"></i>
           </a>
           <!-- Bouton d'édition -->

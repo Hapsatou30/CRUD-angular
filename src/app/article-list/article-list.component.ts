@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2'; 
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-article-list',
@@ -15,6 +16,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent implements OnInit {
+  userName: string | null = null; // Variable pour stocker le nom de l'utilisateur
   articles: any[] = []; // Liste des articles
   articleForm: FormGroup; // Formulaire pour ajouter ou éditer un article
   isEditMode = false; // Indique si le formulaire est en mode édition
@@ -23,7 +25,8 @@ export class ArticleListComponent implements OnInit {
   constructor(
     private crudService: CrudService, // Service pour gérer les opérations CRUD
     private router: Router, // Service de routage
-    private fb: FormBuilder // Service pour la gestion des formulaires réactifs
+    private fb: FormBuilder, // Service pour la gestion des formulaires réactifs
+    private authService: AuthService
   ) {
     // Initialisation du formulaire
     this.articleForm = this.fb.group({
@@ -34,6 +37,7 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadArticles(); // Charger les articles au démarrage
+    this.getUserDetails();
   }
 
   // Méthode pour charger les articles depuis le service
@@ -173,5 +177,28 @@ export class ArticleListComponent implements OnInit {
     this.articleForm.reset();
     this.isEditMode = false;
     this.articleId = null;
+  }
+  getUserDetails(): void {
+    this.authService.getUserDetails().subscribe(response => {
+      this.userName = response.name; // Stocker le nom de l'utilisateur
+    }, error => {
+      console.error('Failed to fetch user details', error);
+      // Ajoutez une gestion d'erreur ici si nécessaire
+    });
+  }
+  
+  // Méthode pour déconnecter l'utilisateur
+  logout(): void {
+    // Suppression des informations d'authentification (par exemple, jeton JWT)
+    localStorage.removeItem('token');
+    // Redirection vers la page de connexion
+    this.router.navigate(['/login']);
+    Swal.fire({
+      title: 'Déconnecté',
+      text: 'Vous avez été déconnecté avec succès.',
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false
+    });
   }
 }
