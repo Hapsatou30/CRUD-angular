@@ -9,7 +9,7 @@ import { AuthGuard } from './auth.guard';
 import { ArticleEditComponent } from './article-edit/article-edit.component';
 import { NotFoundComponent } from './not-found/not-found.component'; 
 
-const routes: Routes = [
+export const routes: Routes = [
   // Liste des articles (accessible uniquement pour les utilisateurs authentifiés)
   { path: 'articles', component: ArticleListComponent, canActivate: [AuthGuard] },
 
