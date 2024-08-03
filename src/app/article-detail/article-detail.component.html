@@ -3,14 +3,34 @@
   <div *ngIf="article">
     <h2>{{ article.title }}</h2>
     <p>{{ article.body }}</p>
-    <p>  <small class="text-muted">Auteur: {{ article.user?.name }}</small></p>
+    <p><small class="text-muted">Auteur: {{ article.user?.name || 'Auteur inconnu' }}</small></p>
     <p><strong>Catégorie:</strong> {{ article.categorie }}</p>
     <img *ngIf="article.image_path" [src]="article.image_path" alt="Image de l'article" class="img-fluid" />
-    <!-- Affiche les boutons si l'utilisateur est l'auteur de l'article -->
-  <div *ngIf="isAuthor">
-    <button class="btn btn-primary" (click)="editArticle(article.id)">Modifier</button>
-    <button class="btn btn-danger" (click)="deleteArticle(article.id)">Supprimer</button>
-  </div>
-    <button> <a routerLink="/articles"> Retour</a> </button> 
+    
+    <div *ngIf="isAuthor">
+      <button class="btn btn-primary" (click)="editArticle(article.id)">Modifier</button>
+      <button class="btn btn-danger" (click)="deleteArticle(article.id)">Supprimer</button>
+    </div>
+    
+    <button><a routerLink="/articles"> Retour</a></button>
+    
+    <div>
+      <h3>Commentaires</h3>
+      <ul>
+        <li *ngFor="let comment of comments">
+          <p><small class="text-muted">Auteur: {{ comment.user.name || 'Utilisateur inconnu' }}</small></p>
+          <p><strong>{{ comment.comment }}</strong></p>
+          <!-- Afficher le bouton de suppression seulement pour l'auteur du commentaire -->
+          <button *ngIf="comment.user_id === userId" class="btn btn-danger" (click)="deleteComment(comment.id)">Supprimer</button>
+        </li>
+      </ul>
+  
+      <form (ngSubmit)="addComment()">
+        <div class="form-group">
+          <textarea [(ngModel)]="newComment" name="comment" class="form-control" placeholder="Ajouter un commentaire..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
+      </form>
+    </div>
   </div>
 </div>

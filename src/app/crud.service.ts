@@ -3,6 +3,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { Comment } from './article-detail/article-detail.component';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,14 +14,11 @@ export class CrudService {
 
   constructor(private http: HttpClient) {}
 
-
-// DANS crud.service.ts
-private getAuthHeaders() {
-  const token = localStorage.getItem('auth_token');
-  console.log('Token utilisé pour l\'authentification:', token); // Debug
-  return new HttpHeaders().set('Authorization', `Bearer ${token}`);
-}
-
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('auth_token');
+    console.log('Token utilisé pour l\'authentification:', token); // Debug
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  }
 
   getArticles(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/articles`, { headers: this.getAuthHeaders() }).pipe(
@@ -51,6 +50,25 @@ private getAuthHeaders() {
       catchError(this.handleError)
     );
   }
+
+  getComments(articleId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${this.apiUrl}/articles/${articleId}/comments`, { headers: this.getAuthHeaders() }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  addComment(articleId: number, comment: any): Observable<Comment> {
+    return this.http.post<Comment>(`${this.apiUrl}/articles/${articleId}/comments`, comment, { headers: this.getAuthHeaders() }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  deleteComment(commentId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/comments/${commentId}`, { headers: this.getAuthHeaders() }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+   
 
   private handleError(error: HttpErrorResponse) {
     console.error('An error occurred:', error.message);
