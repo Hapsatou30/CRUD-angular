@@ -3,8 +3,14 @@
   <div *ngIf="article">
     <h2>{{ article.title }}</h2>
     <p>{{ article.body }}</p>
-    <p><strong>Auteur:</strong> {{ article.userName }}</p>
+    <p>  <small class="text-muted">Auteur: {{ article.user?.name }}</small></p>
     <p><strong>Catégorie:</strong> {{ article.categorie }}</p>
     <img *ngIf="article.image_path" [src]="article.image_path" alt="Image de l'article" class="img-fluid" />
+    <!-- Affiche les boutons si l'utilisateur est l'auteur de l'article -->
+  <div *ngIf="isAuthor">
+    <button class="btn btn-primary" (click)="editArticle(article.id)">Modifier</button>
+    <button class="btn btn-danger" (click)="deleteArticle(article.id)">Supprimer</button>
+  </div>
+    <button> <a routerLink="/articles"> Retour</a> </button> 
   </div>
 </div>

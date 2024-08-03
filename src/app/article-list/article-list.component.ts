@@ -47,10 +47,8 @@ export class ArticleListComponent implements OnInit {
     );
   }
 
-  editArticle(article: any): void {
-    // Rediriger vers la page d'édition de l'article
-    this.router.navigate(['/article/form', article.id]);
-  }
+ 
+  
 
   goToForm(): void {
     this.router.navigate(['/articles/form']);
@@ -60,43 +58,7 @@ export class ArticleListComponent implements OnInit {
     this.router.navigate([`/articles/details/${id}`]);
   }
 
-  deleteArticle(id: number): void {
-    Swal.fire({
-      title: 'Êtes-vous sûr?',
-      text: "Cette action ne peut pas être annulée!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Oui, supprimer!',
-      cancelButtonText: 'Annuler',
-      timer: 3000,
-      showConfirmButton: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.crudService.deleteArticle(id).subscribe(
-          () => {
-            this.articles = this.articles.filter(article => article.id !== id);
-            Swal.fire({
-              title: 'Supprimé!',
-              text: 'L\'article a été supprimé.',
-              icon: 'success',
-              timer: 2000,
-              showConfirmButton: false
-            });
-          },
-          (error) => {
-            console.error('Erreur lors de la suppression de l\'article:', error);
-            Swal.fire({
-              title: 'Erreur',
-              text: 'Erreur lors de la suppression de l\'article.',
-              icon: 'error',
-              timer: 2000,
-              showConfirmButton: false
-            });
-          }
-        );
-      }
-    });
-  }
+ 
 
   getUserDetails(): void {
     this.authService.getUserDetails().subscribe(response => {
