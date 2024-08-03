@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router,RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CrudService } from '../crud.service';
 import { AuthService } from '../auth.service';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+// Interface pour représenter un commentaire
 export interface Comment {
   id: number;
   article_id: number;
@@ -18,18 +20,18 @@ export interface Comment {
 @Component({
   selector: 'app-article-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.css']
 })
 export class ArticleDetailComponent implements OnInit {
-  article: any;
+  article: any; 
   isAuthor: boolean = false; // Variable pour vérifier si l'utilisateur est l'auteur
-  comments: Comment[] = [];
-  newComment: string = '';
-  articleId: number = 0;
+  comments: Comment[] = []; 
+  newComment: string = ''; 
+  articleId: number = 0; 
   userId: number = 0;
-  currentUser: any; // Ajoutez une variable pour stocker les informations de l'utilisateur connecté
+  currentUser: any; // Variable pour stocker les informations de l'utilisateur connecté
 
   constructor(
     private route: ActivatedRoute,
@@ -39,18 +41,25 @@ export class ArticleDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Récupérer l'ID de l'article depuis l'URL
     const id = +this.route.snapshot.paramMap.get('id')!;
     
+    // Récupérer les détails de l'utilisateur connecté
     this.authService.getUserDetails().subscribe(
       userInfo => {
-        this.currentUser = userInfo; // Stocke les informations de l'utilisateur connecté
-        this.userId = userInfo.id; // Initialiser l'ID utilisateur
+        // Stocker les informations de l'utilisateur connecté
+        this.currentUser = userInfo; 
+        // Initialiser l'ID utilisateur
+        this.userId = userInfo.id; 
 
+        // Récupérer les détails de l'article
         this.crudService.getArticle(id).subscribe(
           article => {
+            // Stocker les détails de l'article
             this.article = article;
-            this.articleId = article.id; // Initialiser l'ID de l'article
-            // Vérifiez si l'utilisateur connecté est l'auteur de l'article
+            // Initialiser l'ID de l'article
+            this.articleId = article.id; 
+            // Vérifier si l'utilisateur connecté est l'auteur de l'article
             this.isAuthor = article.user_id === userInfo.id;
 
             // Charger les commentaires de l'article
@@ -64,11 +73,12 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   loadComments(articleId: number): void {
+    // Récupérer les commentaires de l'article
     this.crudService.getComments(articleId).subscribe(
       comments => {
-        // Assurez-vous que chaque commentaire a un objet `user` avec un nom
+        // Assurer que chaque commentaire a un objet `user` avec un nom
         this.comments = comments.map(comment => ({
-          ...comment,
+          ...comment, //On crée une copie de chaque commentaire avec ...comment.
           user: comment.user || { name: 'Utilisateur inconnu' } // Valeur par défaut si `user` est undefined
         }));
       },
@@ -76,17 +86,20 @@ export class ArticleDetailComponent implements OnInit {
     );
   }
   
-  
   addComment(): void {
     if (this.newComment.trim()) {
+      // Préparer les données du nouveau commentaire
       const commentData = {
         article_id: this.articleId,
         user_id: this.userId,
         comment: this.newComment
       };
+      // Ajouter le commentaire via le service CRUD
       this.crudService.addComment(this.articleId, commentData).subscribe(
         (comment: Comment) => {
+          // Ajouter le commentaire au tableau des commentaires
           this.comments.push(comment);
+          // Réinitialiser le champ du nouveau commentaire
           this.newComment = '';
           Swal.fire({
             title: 'Commentaire ajouté!',
@@ -111,6 +124,7 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   editArticle(id: number): void {
+    // Naviguer vers la page de modification de l'article
     this.router.navigate(['/articles/edit', id]);
   }
   
@@ -126,6 +140,7 @@ export class ArticleDetailComponent implements OnInit {
       showConfirmButton: true
     }).then((result) => {
       if (result.isConfirmed) {
+        // Supprimer l'article via le service CRUD
         this.crudService.deleteArticle(id).subscribe(
           () => {
             Swal.fire({
@@ -135,7 +150,8 @@ export class ArticleDetailComponent implements OnInit {
               timer: 2000,
               showConfirmButton: false
             }).then(() => {
-              this.router.navigate([`/articles`]); // Redirection vers la liste des articles après suppression
+              // Rediriger vers la liste des articles après la suppression
+              this.router.navigate([`/articles`]);
             });
           },
           (error) => {
@@ -152,8 +168,9 @@ export class ArticleDetailComponent implements OnInit {
       }
     });
   }
+
   deleteComment(commentId: number): void {
-    // Vérifiez si l'utilisateur connecté est bien l'auteur du commentaire
+    // Vérifier si l'utilisateur connecté est bien l'auteur du commentaire
     const commentToDelete = this.comments.find(comment => comment.id === commentId);
     
     if (commentToDelete && commentToDelete.user_id === this.userId) {
@@ -168,8 +185,10 @@ export class ArticleDetailComponent implements OnInit {
         showConfirmButton: true
       }).then((result) => {
         if (result.isConfirmed) {
+          // Supprimer le commentaire via le service CRUD
           this.crudService.deleteComment(commentId).subscribe(
             () => {
+              // Filtrer le commentaire supprimé du tableau des commentaires
               this.comments = this.comments.filter(comment => comment.id !== commentId);
               Swal.fire({
                 title: 'Supprimé!',
@@ -202,6 +221,4 @@ export class ArticleDetailComponent implements OnInit {
       });
     }
   }
-  
-  
 }
