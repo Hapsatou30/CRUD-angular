@@ -1,7 +1,16 @@
-<div *ngIf="article" class="card mt-4">
-  <div class="card-body">
-    <h2 class="card-title">{{ article.title }}</h2>
-    <p class="card-text">{{ article.body }}</p>
-    <a routerLink="/articles" class="btn btn-primary">Back to List</a>
+<div class="container mt-4">
+  <h1>Détails de l'article</h1>
+  <div *ngIf="article">
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.body }}</p>
+    <p>  <small class="text-muted">Auteur: {{ article.user?.name }}</small></p>
+    <p><strong>Catégorie:</strong> {{ article.categorie }}</p>
+    <img *ngIf="article.image_path" [src]="article.image_path" alt="Image de l'article" class="img-fluid" />
+    <!-- Affiche les boutons si l'utilisateur est l'auteur de l'article -->
+  <div *ngIf="isAuthor">
+    <button class="btn btn-primary" (click)="editArticle(article.id)">Modifier</button>
+    <button class="btn btn-danger" (click)="deleteArticle(article.id)">Supprimer</button>
+  </div>
+    <button> <a routerLink="/articles"> Retour</a> </button> 
   </div>
 </div>

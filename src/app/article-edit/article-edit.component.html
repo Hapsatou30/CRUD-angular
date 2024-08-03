@@ -1,0 +1,52 @@
+<div class="container">
+    <h2>Modifier l'article</h2>
+  
+    <form [formGroup]="articleForm" (ngSubmit)="submitForm()">
+      <div class="mb-3">
+        <div class="floating-label">
+          <input id="title" formControlName="title" class="form-control" placeholder=" " />
+          <label for="title">Titre</label>
+        </div>
+        <div *ngIf="articleForm.controls['title'].invalid && articleForm.controls['title'].touched">
+          <span *ngIf="articleForm.controls['title'].errors?.['required']" class="text-danger">Titre est obligatoire.</span>
+          <span *ngIf="articleForm.controls['title'].errors?.['minlength']" class="text-danger">Titre doit contenir au moins 5 caractères.</span>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <div class="floating-label">
+          <textarea id="body" formControlName="body" class="form-control" placeholder=" "></textarea>
+          <label for="body">Contenu</label>
+        </div>
+        <div *ngIf="articleForm.controls['body'].invalid && articleForm.controls['body'].touched">
+          <span *ngIf="articleForm.controls['body'].errors?.['required']" class="text-danger">Contenu est obligatoire.</span>
+          <span *ngIf="articleForm.controls['body'].errors?.['minlength']" class="text-danger">Contenu doit avoir au moins 10 caractères.</span>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <div class="floating-label">
+          <input id="image_path" formControlName="image_path" type="text" class="form-control" placeholder=" " />
+          <label for="image_path">Chemin de l'image</label>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="categorie">Catégorie</label>
+        <select id="categorie" formControlName="categorie" class="form-select">
+          <option value="" disabled>Sélectionner une catégorie</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+        <div *ngIf="articleForm.controls['categorie'].invalid && articleForm.controls['categorie'].touched">
+          <span *ngIf="articleForm.controls['categorie'].errors?.['required']" class="text-danger">Catégorie est obligatoire.</span>
+        </div>
+      </div>
+  
+      <input type="hidden" formControlName="user_id" />
+  
+      <button type="submit" class="btn btn-primary" [disabled]="articleForm.invalid">Enregistrer</button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="resetForm()">Réinitialiser</button>
+      <button type="button" (click)="goBack()" class="btn btn-secondary">Retour</button>
+    </form>
+  </div>
+  
