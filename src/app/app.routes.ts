@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { ArticleEditComponent } from './article-edit/article-edit.component';
+import { NotFoundComponent } from './not-found/not-found.component'; 
 
 const routes: Routes = [
   // Liste des articles (accessible uniquement pour les utilisateurs authentifiés)
@@ -18,8 +19,8 @@ const routes: Routes = [
   // Formulaire d'ajout d'un article (accessible uniquement pour les utilisateurs authentifiés)
   { path: 'articles/form', component: ArticleFormComponent, canActivate: [AuthGuard] },
 
+  // Formulaire de modification d'un article (accessible uniquement pour les utilisateurs authentifiés)
   { path: 'articles/edit/:id', component: ArticleEditComponent, canActivate: [AuthGuard] },
- 
 
   // Inscription
   { path: 'register', component: RegisterComponent },
@@ -28,8 +29,14 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
 
   // Redirection vers la page de connexion par défaut
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+
+  // Route pour les pages non trouvées
+  { path: '**', component: NotFoundComponent }
 ];
 
-// Exportation des routes pour être utilisées ailleurs
-export { routes };
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
