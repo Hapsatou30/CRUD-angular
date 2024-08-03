@@ -20,12 +20,11 @@ export class ArticleDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.crudService.getArticle(Number(id)).subscribe(article => {
-        this.article = article;
-      });
-    }
+    const id = +this.route.snapshot.paramMap.get('id')!;
+    this.crudService.getArticle(id).subscribe(
+      article => this.article = article,
+      error => console.error('Erreur lors de la récupération de l\'article:', error)
+    );
   }
 }
 

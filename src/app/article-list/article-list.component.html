@@ -1,83 +1,30 @@
-<div class="container mt-5">
-  <!-- Affichage du nom de l'utilisateur connecté -->
-  <div *ngIf="userName" class="row justify-content-start mb-3">
-    <div class="col-auto">
-      <span>Bienvenue, {{ userName }}!</span>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>Liste des articles</h1>
+    <div>
+      <span *ngIf="userName">Bienvenue, {{ userName }}!</span>
+      <button class="btn btn-danger ms-3" (click)="logout()">Déconnexion</button>
     </div>
   </div>
   
-  <!-- Bouton de déconnexion -->
-  <div class="row justify-content-end mb-3">
-    <div class="col-auto">
-      <button (click)="logout()" class="btn btn-danger">Déconnexion</button>
+  <button class="btn btn-primary mb-3" (click)="goToForm()">Ajouter un article</button>
+  
+  <div class="row">
+    <div class="col-12">
+      <ul class="list-group">
+        <li *ngFor="let article of articles" class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <h5>{{ article.title }}</h5>
+            <p>{{ article.body }}</p>
+            <small class="text-muted">Auteur: {{ article.user?.name }}</small>
+          </div>
+          <div>
+            <button (click)="goToDetails(article.id)" class="btn btn-info btn-sm">Voir détails</button>
+            <button (click)="editArticle(article.id)" class="btn btn-warning btn-sm ms-2">Modifier</button>
+            <button (click)="deleteArticle(article.id)" class="btn btn-danger btn-sm ms-2">Supprimer</button>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
-
-  <div class="row d-flex align-items-center mb-5">
-    <div class="col-md-6 col-12 mb-4 mb-md-0">
-      <!-- Formulaire d'ajout/modification d'article -->
-      <h2>Formulaire</h2>
-      <form [formGroup]="articleForm" (ngSubmit)="addArticle()">
-        <div class="mb-3">
-          <div class="floating-label">
-            <input id="title" formControlName="title" class="form-control" placeholder=" " />
-            <label for="title">Titre</label>
-          </div>
-          <div *ngIf="articleForm.controls['title'].invalid && articleForm.controls['title'].touched">
-            <span *ngIf="articleForm.controls['title'].errors?.['required']" class="text-danger">Titre est obligatoire.</span>
-            <span *ngIf="articleForm.controls['title'].errors?.['minlength']" class="text-danger">Titre doit contenir au moins 5 caractères.</span>
-          </div>
-        </div>
-        <div class="mb-3">
-          <div class="floating-label">
-            <textarea id="body" formControlName="body" class="form-control" placeholder=" "></textarea>
-            <label for="body">Contenu</label>
-          </div>
-          <div *ngIf="articleForm.controls['body'].invalid && articleForm.controls['body'].touched">
-            <span *ngIf="articleForm.controls['body'].errors?.['required']" class="text-danger">Contenu est obligatoire.</span>
-            <span *ngIf="articleForm.controls['body'].errors?.['minlength']" class="text-danger">Contenu doit avoir au moins 10 caractères.</span>
-          </div>
-        </div>
-        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
-          <button type="submit" [disabled]="articleForm.invalid" class="btn btn-primary form-btn">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
-          <button type="button" (click)="resetForm()" class="btn btn-secondary form-btn mt-2 mt-md-0">Réinitialiser</button>
-        </div>
-      </form>
-    </div>
-    <div class="col-md-6 col-12 d-flex align-items-center justify-content-center">
-      <img src="assets/images/post.png" alt="Description Image" class="img-fluid">
-    </div>
-  </div>
-
-  <!-- Liste des articles -->
-  <h1 class="text-center mt-5">La liste des articles</h1>
-  <table class="table mt-4">
-    <thead>
-      <tr>
-        <th scope="col">Titre</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let article of articles">
-        <td>
-          {{ article.title }}
-        </td>
-        <td>
-          <!-- Lien vers les détails -->
-          <a [routerLink]="['/details', article.id]" class="btn btn-sm me-2" title="Voir Détails">
-            <i class="fas fa-info-circle"></i>
-          </a>
-          <!-- Bouton d'édition -->
-          <button (click)="editArticle(article)" class="btn update btn-sm me-2" title="Modifier">
-            <i class="fas fa-edit"></i>
-          </button>
-          <!-- Bouton de suppression -->
-          <button (click)="deleteArticle(article.id)" class="btn delete btn-sm" title="Supprimer">
-            <i class="fas fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
 </div>
