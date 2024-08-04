@@ -1,0 +1,83 @@
+body {
+    background: url('https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .contact-form {
+    border-radius: 1rem;
+    padding-top: 5%;
+  }
+  .contact-form .form-control, .form-select {
+    border-radius: 1rem;
+    padding: 3%;
+    color: black;
+    font-size: 22px;
+  }
+  
+  
+  .contact-form h1 {
+    margin-bottom: 5%;
+    text-align: center;
+    color: #082BCB;
+    font-weight: bold;
+  }
+  .contact-form .btnContact {
+    width: 100%;
+    border: none;
+    border-radius: 1rem;
+    padding: 3%;
+    background: #082BCB;
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+  }
+  .btnContactSubmit {
+    width: 100%;
+    border-radius: 1rem;
+    padding: 3%;
+    color: #fff;
+    background-color: #8b0f0a;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+  }
+  .btnRetour{
+    width: 100%;
+    border-radius: 1rem;
+    padding: 3%;
+    
+    border: none;
+    cursor: pointer;
+    background: rgba(53, 59, 73, 0.9);
+  }
+  .btnRetour a{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-control::placeholder,  option {
+    font-size: 16px;
+    color: rgba(58, 52, 52, 0.637);
+  }
+  
+  @media (min-width: 768px) {
+    .contact-form {
+      width: 70%;
+    }
+    .contact-form form {
+      padding: 10%;
+    }
+    
+    .footer {
+      margin-top: 10%;
+    }
+  }
