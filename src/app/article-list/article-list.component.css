@@ -1,180 +1,257 @@
-/* Styles généraux */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+/* Style par défaut pour les petits écrans (mobile-first) */
+
+/* Style pour la navbar */
+.navbar {
+  padding: 1rem;
+  background-color: #082BCB;
 }
 
-h2, h3 {
-  color: #42009E; /* Utilisation de la couleur préférée */
-}
-
-form {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  border-color: #42009E;
-  border: 1px solid #42009E;
-}
-
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-input, textarea {
-  border-bottom: 1px solid #42009E;
-}
-
-.table {
-  background-color: #ffffff;
-  margin-top: 20px;
-}
-
-.table thead {
-  background-color: #4862C4;
-  color: #ffffff;
-}
-
-.table tbody tr:hover {
-  background-color: #f1f1f1;
-}
-
-.text-danger {
-  font-size: 0.875rem;
-}
-
-.btn-primary {
-  background-color: #42009E;
-  border-color: #42009E;
-}
-
-button {
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #42009E;
-  color: #ffffff;
-}
-
-.form-btn {
-  min-width: 100px;
-  margin-top: 10px;
-}
-
-.btn i {
-  font-size: 20px;
-}
-
-h1 {
-  color: #42009E;
-}
-
-th {
-  font-size: 20px;
-}
-
-td {
-  color: #000000;
-  font-size: 18px;
-}
-
-.update {
-  color: #42009E;
-}
-
-.delete {
-  color: red;
+.navbar-toggler {
+  border: none;
   background-color: transparent;
 }
 
-.delete:hover {
-  color: red;
-  background-color: transparent;
+.navbar-toggler-icon {
+  background-color: #fff;
 }
 
-.floating-label {
-  position: relative;
+.navbar-nav {
+  display: block; /* Par défaut pour les petits écrans */
 }
 
-.floating-label input,
-.floating-label textarea {
-  padding-top: 20px;
-  padding-bottom: 10px;
+.form-control {
+  border-radius: 50px;
 }
 
-.floating-label label {
+/* Style pour le champ de recherche */
+input.form-control {
+  border-radius: 50px;
+  padding-left: 2rem;
+  box-shadow: none;
+}
+
+input.form-control::placeholder {
+  color: #6c757d;
+}
+
+input.form-control:focus {
+  box-shadow: none;
+}
+
+.form-control + span {
   position: absolute;
+  left: 0.5rem;
   top: 50%;
-  left: 15px;
-  pointer-events: none;
-  transition: all 0.2s ease;
-  color: #000000;
-  font-size: 20px;
   transform: translateY(-50%);
 }
 
-.floating-label input:focus ~ label,
-.floating-label textarea:focus ~ label,
-.floating-label input:not(:placeholder-shown) ~ label,
-.floating-label textarea:not(:placeholder-shown) ~ label {
-  top: 0;
-  left: 0;
-  font-size: 18px;
-  color: #42009E; /* Couleur de votre choix */
-  background-color: #ffffff; /* Couleur de fond pour le label flottant */
-  padding: 0 4px; /* Espace autour du texte du label */
+.btn-custom {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+  border-radius: 50px;
 }
 
-/* Styles pour les écrans mobiles */
-@media (max-width: 768px) {
-  .container {
-    padding: 0 15px;
-  }
+.btn-custom:hover {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+}
 
-  h2, h3 {
-    font-size: 1.5rem; /* Réduit la taille des titres */
-  }
+.btn-danger {
+  background-color: transparent;
+  border-color: red;
+  border-radius: 50px;
+}
 
-  form {
-    padding: 15px;
-  }
+.btn-danger:hover {
+  background-color: red;
+  border-color: red;
+}
 
-  .btn-primary {
-    padding: 10px 20px; /* Ajuste le padding des boutons */
-  }
+/* Style pour le texte de bienvenue */
+span {
+  color: #fff;
+  margin-right: 1rem;
+}
+ h1{
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+ }
+/* Style pour les cartes */
+.card {
+  width: 100%; /* 100% de la largeur du conteneur pour les petits écrans */
+  height: auto; /* Hauteur automatique pour une meilleure flexibilité */
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background: #fff;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1rem;
+  padding-bottom: 50px;
+}
 
-  .table th,
-  .table td {
-    font-size: 16px; /* Réduit la taille de la police dans la table */
-  }
+.card .backgroundEffect {
+  bottom: 0;
+  height: 0;
+  width: 100%;
+}
 
-  .btn i {
-    font-size: 18px; /* Réduit la taille des icônes */
-  }
+.card:hover {
+  color: #fff;
+  transform: scale(1.025);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px;
+}
 
-  .form-btn {
-    min-width: auto; /* Ajuste la largeur minimale pour les boutons */
+.card:hover .backgroundEffect {
+  bottom: 0;
+  height: 320px;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  background: #082BCB;
+  animation: popBackground 0.3s ease-in;
+}
+
+@keyframes popBackground {
+  0% {
+    height: 20px;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+  }
+  50% {
+    height: 80px;
+    border-top-left-radius: 75%;
+    border-top-right-radius: 75%;
+  }
+  75% {
+    height: 160px;
+    border-top-left-radius: 85%;
+    border-top-right-radius: 85%;
+  }
+  100% {
+    height: 320px;
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
   }
 }
 
-@media (max-width: 576px) {
-  h2, h3 {
-    font-size: 1.2rem; /* Réduit encore plus la taille des titres */
-  }
+.card .pic {
+  position: relative;
+}
 
-  .table th,
-  .table td {
-    font-size: 14px; /* Réduit encore plus la taille de la police dans la table */
-  }
+.card .pic img {
+  width: 100%;
+  height: auto; /* Hauteur automatique pour une meilleure flexibilité */
+  object-fit: cover;
+}
 
-  .btn i {
-    font-size: 16px; /* Réduit encore plus la taille des icônes */
-  }
+.card .date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 70px;
+  background-color: #082BCB;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  transition: all ease;
+}
 
-  .form-btn {
-    min-width: 100%; /* Les boutons prennent toute la largeur */
-    text-align: center; /* Centrer le texte dans les boutons */
+
+.card .text-muted {
+  font-size: 12px;
+}
+
+.card:hover .text-muted {
+  color: #fff !important;
+}
+
+.card .content {
+  padding: 0 15px; /* Réduit le padding pour les petits écrans */
+}
+
+.card .content .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  background-color: #082BCB;
+  border-radius: 25px;
+  font-size: 12px;
+  border: none;
+}
+
+.card:hover .content .btn {
+  background: #fff;
+  color: #082BCB;
+  box-shadow: #0000001a 0px 3px 5px;
+}
+
+.card .content .btn .fas {
+  font-size: 10px;
+  padding-left: 5px;
+}
+
+.card .content .foot .admin {
+  color: #082BCB;
+  font-size: 12px;
+}
+
+.card:hover .content  .admin {
+  color: #fff;
+}
+
+.card .content .foot .icon {
+  font-size: 12px;
+}
+/* Assurez-vous que la classe admin n'a pas de marge par défaut */
+.admin {
+  color: #082BCB;
+  font-size: 12px;
+  margin: 0; /* Supprimer les marges par défaut */
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.fixed-footer {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  width: 90%;
+}
+
+
+
+
+/* Media Queries pour les écrans plus larges */
+@media (min-width: 768px) {
+  .navbar-nav {
+    display: flex; /* Pour les écrans moyens (tablettes) et plus grands */
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-nav {
+    display: flex; /* Pour les écrans larges (ordinateurs) */
+  }
+  
+  .card {
+    width: 280px; /* Largeur fixe pour les grands écrans */
   }
 }

@@ -86,6 +86,17 @@ export class ArticleListComponent implements OnInit {
       });
     });
   }
-
+ // Formatage de la date de création
+ formatDate(dateString: string): string {
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString('fr-FR', options);
+}
+getExcerpt(body: string): string {
+  if (body.length > 100) {
+    return body.substring(0, 100) + '...';
+  } else {
+    return body;
+  }
+}
   
 }
