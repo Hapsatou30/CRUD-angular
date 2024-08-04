@@ -28,7 +28,7 @@
             <i class="bi bi-calendar me-2"></i>{{ formatDate(article.created_at) }}
           </p>
           <p class="mb-3">
-            <i class="bi bi-tags me-2"></i><strong></strong> {{ article.categorie }}
+            <i class="bi bi-tags me-2"></i><strong> {{ article.categorie }}</strong>
           </p>
         
           <div *ngIf="isAuthor" class="mb-3 mb-sm-0 d-flex align-items-center justify-content-between">
@@ -54,7 +54,7 @@
         <!-- Section des Commentaires -->
         <div class="col-lg-6 col-12 pb-4">
           <div class="comments-section mt-4">
-            <h3 class="text-white mb-4">Commentaires</h3>
+            <h3 class=" mb-4">Commentaires</h3>
             <ul class="list-unstyled">
               <li *ngFor="let comment of comments" class="comment-item mb-3">
                 <div class="comment-content d-flex align-items-start">

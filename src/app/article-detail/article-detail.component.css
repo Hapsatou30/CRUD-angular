@@ -33,7 +33,9 @@
   color: #082BCB;
   font-size: 20px;
 }
-
+.card-text {
+  font-size: 22px;
+}
 .texte {
   display: flex;
   align-items: center;
@@ -87,7 +89,7 @@
 }
 
 .form-control::placeholder{
-  color: white;
+  color: black;
   font-size: 16px;
 }
 
@@ -113,7 +115,6 @@
 
 .comments-section {
   background-color: transparent;
-  border: 1px solid rgba(53, 59, 73, 0.9);
   border-radius: 5px;
   padding: 20px;
 }
@@ -137,10 +138,9 @@
 }
 
 .form-group textarea {
-  background-color: rgba(53, 59, 73, 0.9);
   border: 1px solid rgba(16, 46, 46, 1);
-  border-radius: 12px;
-  color: #fff;
+  border-radius: 14px;
+  color: black;
 }
 
 .btn-primary {

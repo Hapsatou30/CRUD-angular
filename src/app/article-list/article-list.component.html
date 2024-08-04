@@ -38,24 +38,26 @@
   <h1>Liste des articles</h1>
   <div class="row">
     <div class="col-12">
-      <div class="d-lg-flex flex-wrap">
-        <div *ngFor="let article of filteredArticles" class="card border-0 me-lg-4 mb-lg-0 mb-4">
-          <div class="backgroundEffect"></div>
-          <div class="pic">
-            <img [src]="article.image_path" alt="{{ article.title }}" class="img-fluid">
-            <div class="date">
-              <p style="margin: 8px; text-align: center;">{{ formatDate(article.created_at) }}</p>
+      <div class="row">
+        <div *ngFor="let article of filteredArticles" class="col-lg-4 mb-4">
+          <div class="card border-0 h-100">
+            <div class="backgroundEffect"></div>
+            <div class="pic">
+              <img [src]="article.image_path" alt="{{ article.title }}" class="img-fluid">
+              <div class="date">
+                <p style="margin: 10px; text-align: center;">{{ formatDate(article.created_at) }}</p>
+              </div>
             </div>
-          </div>
-          <div class="content d-flex flex-column">
-            <p class="h-1 mt-4">{{ article.title }}</p>
-            <p class="text-muted mt-3">{{ getExcerpt(article.body) }}</p>
-            <div class="mt-auto d-flex align-items-center justify-content-between pb-3 my-2 fixed-footer">
-              <div class="btn btn-primary d-flex justify-content-center align-items-center" (click)="goToDetails(article.id)">
-                <i class="fas fa-eye" style="font-size: 25px; margin-right: 5px;"></i> <!-- Icône d'œil -->
-              </div>              
-              <div class="d-flex align-items-center">
-                <p class="admin mb-0">Auteur: {{ article.user?.name }}</p>
+            <div class="content d-flex flex-column">
+              <h4 class="h-1 mt-4">{{ article.title }}</h4>
+              <p class="text-muted mt-3">{{ getExcerpt(article.body) }}</p>
+              <div class="mt-auto d-flex align-items-center justify-content-between pb-3 my-2 fixed-footer">
+                <div class="btn btn-primary d-flex justify-content-center align-items-center" (click)="goToDetails(article.id)">
+                  <i class="fas fa-eye" style="font-size: 25px; margin-right: 5px;"></i> <!-- Icône d'œil -->
+                </div>
+                <div class="d-flex align-items-center">
+                  <p class="admin mb-0">Auteur: {{ article.user?.name }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -63,4 +65,5 @@
       </div>
     </div>
   </div>
+  
 </div>
