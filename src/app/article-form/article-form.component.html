@@ -1,46 +1,74 @@
-<div class="container">
-    <h2>Formulaire d'ajout d'article</h2>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire d'ajout d'article</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+ 
+</head>
+<body>
+  <div class="container contact-form">
     <form [formGroup]="articleForm" (ngSubmit)="submitForm()">
-      <!-- Champs du formulaire -->
-      <div class="mb-3">
-        <div class="floating-label">
-          <input id="title" formControlName="title" class="form-control" placeholder=" " />
-          <label for="title">Titre</label>
+      <h1>Formulaire d'ajout d'article</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <input id="title" formControlName="title" class="form-control" placeholder="Titre" />
+            <div *ngIf="articleForm.controls['title'].invalid && articleForm.controls['title'].touched">
+              <span *ngIf="articleForm.controls['title'].errors?.['required']" class="text-danger">Titre est obligatoire.</span>
+              <span *ngIf="articleForm.controls['title'].errors?.['minlength']" class="text-danger">Titre doit contenir au moins 5 caractères.</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <input id="image_path" formControlName="image_path" type="text" class="form-control" placeholder="Chemin de l'image" />
+          </div>
+          <div class="form-group">
+            <select id="categorie" formControlName="categorie" class="form-select">
+              <option value="" disabled selected>Sélectionner une catégorie</option>
+              <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+            </select>
+            <div *ngIf="articleForm.controls['categorie'].invalid && articleForm.controls['categorie'].touched">
+              <span *ngIf="articleForm.controls['categorie'].errors?.['required']" class="text-danger">Catégorie est obligatoire.</span>
+            </div>
+          </div>
         </div>
-        <div *ngIf="articleForm.controls['title'].invalid && articleForm.controls['title'].touched">
-          <span *ngIf="articleForm.controls['title'].errors?.['required']" class="text-danger">Titre est obligatoire.</span>
-          <span *ngIf="articleForm.controls['title'].errors?.['minlength']" class="text-danger">Titre doit contenir au moins 5 caractères.</span>
-        </div>
-      </div>
-      <div class="mb-3">
-        <div class="floating-label">
-          <textarea id="body" formControlName="body" class="form-control" placeholder=" "></textarea>
-          <label for="body">Contenu</label>
-        </div>
-        <div *ngIf="articleForm.controls['body'].invalid && articleForm.controls['body'].touched">
-          <span *ngIf="articleForm.controls['body'].errors?.['required']" class="text-danger">Contenu est obligatoire.</span>
-          <span *ngIf="articleForm.controls['body'].errors?.['minlength']" class="text-danger">Contenu doit avoir au moins 10 caractères.</span>
-        </div>
-      </div>
-      <div class="mb-3">
-        <div class="floating-label">
-          <input id="image_path" formControlName="image_path" type="text" class="form-control" placeholder=" " />
-          <label for="image_path">Chemin de l'image</label>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="categorie">Catégorie</label>
-        <select id="categorie" formControlName="categorie" class="form-select">
-          <option value="" disabled selected>Sélectionner une catégorie</option>
-          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-        </select>
-        <div *ngIf="articleForm.controls['categorie'].invalid && articleForm.controls['categorie'].touched">
-          <span *ngIf="articleForm.controls['categorie'].errors?.['required']" class="text-danger">Catégorie est obligatoire.</span>
+        <div class="col-md-6">
+          <div class="form-group">
+            <textarea id="body" formControlName="body" class="form-control" placeholder="Contenu" style="width: 100%; height: 180px;"></textarea>
+            <div *ngIf="articleForm.controls['body'].invalid && articleForm.controls['body'].touched">
+              <span *ngIf="articleForm.controls['body'].errors?.['required']" class="text-danger">Contenu est obligatoire.</span>
+              <span *ngIf="articleForm.controls['body'].errors?.['minlength']" class="text-danger">Contenu doit avoir au moins 10 caractères.</span>
+            </div>
+          </div>
         </div>
       </div>
-      <input type="hidden" formControlName="user_id" />
-      <button type="submit" class="btn btn-primary" [disabled]="articleForm.invalid">Ajouter</button>
-      <button type="button" class="btn btn-secondary" (click)="resetForm()">Réinitialiser</button>
+      <div class="row footer">
+        <div class="col-md-4">
+          <div class="form-group">
+            <button type="submit" name="btnSubmit" class="btnContact" [disabled]="articleForm.invalid">
+              <i class="fas fa-plus-circle"></i> Ajouter
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <button type="button" class=" btnContactSubmit" (click)="resetForm()">
+              <i class="fas fa-redo-alt"></i> Réinitialiser
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <button class="btnRetour">
+              <a routerLink="/articles"><i class="fas fa-arrow-left"></i> Retour</a>
+            </button>
+          </div>
+        </div>
+      </div>
     </form>
   </div>
-  
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>
