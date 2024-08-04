@@ -1,36 +1,94 @@
-<div class="container mt-4">
-  <h1>Détails de l'article</h1>
-  <div *ngIf="article">
-    <h2>{{ article.title }}</h2>
-    <p>{{ article.body }}</p>
-    <p><small class="text-muted">Auteur: {{ article.user?.name || 'Auteur inconnu' }}</small></p>
-    <p><strong>Catégorie:</strong> {{ article.categorie }}</p>
-    <img *ngIf="article.image_path" [src]="article.image_path" alt="Image de l'article" class="img-fluid" />
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails de l'article</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+
+</head>
+<body>
+  <div class="container mt-4">
+    <div class="card shadow-sm">
+      <!-- Partie de l'image -->
+      <img *ngIf="article.image_path" [src]="article.image_path" alt="Image de l'article" class="card-img-top" />
+      
+      <div class="card-body">
+        <h1 class="card-title mb-4">Détails de l'article</h1>
+        
+        <div *ngIf="article" class="article-details">
+          <h3 class="card-subtitle mb-3">{{ article.title }}</h3>
+          <p class="card-text mb-3">{{ article.body }}</p>
+         
+          <p class="mb-3">
+            <i class="bi bi-person me-2"></i>{{ article.user?.name || 'Auteur inconnu' }}
+          </p>
+          <p class="mb-3">
+            <i class="bi bi-calendar me-2"></i>{{ formatDate(article.created_at) }}
+          </p>
+          <p class="mb-3">
+            <i class="bi bi-tags me-2"></i><strong></strong> {{ article.categorie }}
+          </p>
+        
+          <div *ngIf="isAuthor" class="mb-3 mb-sm-0 d-flex align-items-center justify-content-between">
+            <button class="btn btn-primary me-2 mb-2 mb-sm-0" (click)="editArticle(article.id)">
+              <i class="bi bi-pencil"style="color: white;"  ></i>
+            </button>
+            <button class="btn btn-danger" (click)="deleteArticle(article.id)">
+              <i class="bi bi-trash" style="color: white;" ></i>
+            </button>
+          </div>
     
-    <div *ngIf="isAuthor">
-      <button class="btn btn-primary" (click)="editArticle(article.id)">Modifier</button>
-      <button class="btn btn-danger" (click)="deleteArticle(article.id)">Supprimer</button>
-    </div>
-    
-    <button><a routerLink="/articles"> Retour</a></button>
-    
-    <div>
-      <h3>Commentaires</h3>
-      <ul>
-        <li *ngFor="let comment of comments">
-          <p><small class="text-muted">Auteur: {{ comment.user.name || 'Utilisateur inconnu' }}</small></p>
-          <p><strong>{{ comment.comment }}</strong></p>
-          <!-- Afficher le bouton de suppression seulement pour l'auteur du commentaire -->
-          <button *ngIf="comment.user_id === userId" class="btn btn-danger" (click)="deleteComment(comment.id)">Supprimer</button>
-        </li>
-      </ul>
-  
-      <form (ngSubmit)="addComment()">
-        <div class="form-group">
-          <textarea [(ngModel)]="newComment" name="comment" class="form-control" placeholder="Ajouter un commentaire..." required></textarea>
+          <button class="btnRetour">
+            <a routerLink="/articles"><i class="fas fa-arrow-left"></i> Retour</a>
+          </button>
         </div>
-        <button type="submit" class="btn btn-primary">Ajouter Commentaire</button>
-      </form>
+      </div>
     </div>
+    
   </div>
-</div>
+  <section>
+    <div class="container">
+      <div class="row d-flex align-items-center">
+        <!-- Section des Commentaires -->
+        <div class="col-lg-6 col-12 pb-4">
+          <div class="comments-section mt-4">
+            <h3 class="text-white mb-4">Commentaires</h3>
+            <ul class="list-unstyled">
+              <li *ngFor="let comment of comments" class="comment-item mb-3">
+                <div class="comment-content d-flex align-items-start">
+                  <img [src]="comment.user.avatar || 'https://i.imgur.com/CFpa3nK.jpg'" alt="Avatar" class="rounded-circle me-3" width="40" height="40">
+                  <div class="text-comment">
+                    <p class="mb-1">Auteur: {{ comment.user.name || 'Utilisateur inconnu' }}</p>
+                    <p class="font-weight-bold mb-2">{{ comment.comment }}</p>
+                    <p class="text-muted mb-2"><small>{{ formatDate(comment.created_at) }}</small></p>
+                    <button *ngIf="comment.user_id === userId" class="btn btn-danger" (click)="deleteComment(comment.id)">
+                      <i class="bi bi-trash" style="color: white;"></i>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Formulaire d'ajout de commentaire -->
+        <div class="col-lg-6 col-12 pb-4">
+          <div class="form-group mt-4">
+            <form (ngSubmit)="addComment()">
+              <textarea [(ngModel)]="newComment" name="comment" class="form-control mb-3" placeholder="Ajouter un commentaire..." required></textarea>
+              <button type="submit" class="btn btn-primary"><i class="bi bi-send" style="color: white;"></i> Ajouter Commentaire</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>

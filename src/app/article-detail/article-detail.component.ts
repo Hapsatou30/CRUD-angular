@@ -12,8 +12,10 @@ export interface Comment {
   article_id: number;
   user_id: number;
   comment: string;
+  created_at?: string;
   user: {
     name: string;
+    avatar?: string; 
   };
 }
 
@@ -41,28 +43,18 @@ export class ArticleDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Récupérer l'ID de l'article depuis l'URL
     const id = +this.route.snapshot.paramMap.get('id')!;
     
-    // Récupérer les détails de l'utilisateur connecté
     this.authService.getUserDetails().subscribe(
       userInfo => {
-        // Stocker les informations de l'utilisateur connecté
         this.currentUser = userInfo; 
-        // Initialiser l'ID utilisateur
         this.userId = userInfo.id; 
 
-        // Récupérer les détails de l'article
         this.crudService.getArticle(id).subscribe(
           article => {
-            // Stocker les détails de l'article
             this.article = article;
-            // Initialiser l'ID de l'article
             this.articleId = article.id; 
-            // Vérifier si l'utilisateur connecté est l'auteur de l'article
             this.isAuthor = article.user_id === userInfo.id;
-
-            // Charger les commentaires de l'article
             this.loadComments(id);
           },
           error => console.error('Erreur lors de la récupération de l\'article:', error)
@@ -73,13 +65,11 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   loadComments(articleId: number): void {
-    // Récupérer les commentaires de l'article
     this.crudService.getComments(articleId).subscribe(
       comments => {
-        // Assurer que chaque commentaire a un objet `user` avec un nom
         this.comments = comments.map(comment => ({
-          ...comment, //On crée une copie de chaque commentaire avec ...comment.
-          user: comment.user || { name: 'Utilisateur inconnu' } // Valeur par défaut si `user` est undefined
+          ...comment,
+          user: comment.user || { name: 'Utilisateur inconnu' }
         }));
       },
       error => console.error('Erreur lors de la récupération des commentaires:', error)
@@ -88,18 +78,14 @@ export class ArticleDetailComponent implements OnInit {
   
   addComment(): void {
     if (this.newComment.trim()) {
-      // Préparer les données du nouveau commentaire
       const commentData = {
         article_id: this.articleId,
         user_id: this.userId,
         comment: this.newComment
       };
-      // Ajouter le commentaire via le service CRUD
       this.crudService.addComment(this.articleId, commentData).subscribe(
         (comment: Comment) => {
-          // Ajouter le commentaire au tableau des commentaires
           this.comments.push(comment);
-          // Réinitialiser le champ du nouveau commentaire
           this.newComment = '';
           Swal.fire({
             title: 'Commentaire ajouté!',
@@ -124,7 +110,6 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   editArticle(id: number): void {
-    // Naviguer vers la page de modification de l'article
     this.router.navigate(['/articles/edit', id]);
   }
   
@@ -140,7 +125,6 @@ export class ArticleDetailComponent implements OnInit {
       showConfirmButton: true
     }).then((result) => {
       if (result.isConfirmed) {
-        // Supprimer l'article via le service CRUD
         this.crudService.deleteArticle(id).subscribe(
           () => {
             Swal.fire({
@@ -150,7 +134,6 @@ export class ArticleDetailComponent implements OnInit {
               timer: 2000,
               showConfirmButton: false
             }).then(() => {
-              // Rediriger vers la liste des articles après la suppression
               this.router.navigate([`/articles`]);
             });
           },
@@ -170,7 +153,6 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   deleteComment(commentId: number): void {
-    // Vérifier si l'utilisateur connecté est bien l'auteur du commentaire
     const commentToDelete = this.comments.find(comment => comment.id === commentId);
     
     if (commentToDelete && commentToDelete.user_id === this.userId) {
@@ -185,10 +167,8 @@ export class ArticleDetailComponent implements OnInit {
         showConfirmButton: true
       }).then((result) => {
         if (result.isConfirmed) {
-          // Supprimer le commentaire via le service CRUD
           this.crudService.deleteComment(commentId).subscribe(
             () => {
-              // Filtrer le commentaire supprimé du tableau des commentaires
               this.comments = this.comments.filter(comment => comment.id !== commentId);
               Swal.fire({
                 title: 'Supprimé!',
@@ -220,5 +200,13 @@ export class ArticleDetailComponent implements OnInit {
         showConfirmButton: false
       });
     }
+  }
+
+  formatDate(date?: string): string {
+    if (date) {
+      const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(date).toLocaleDateString('fr-FR', options);
+    }
+    return 'Date inconnue';
   }
 }

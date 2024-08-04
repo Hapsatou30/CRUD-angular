@@ -1,35 +1,204 @@
+/* Styles généraux */
+.container {
+  max-width: 100%;
+  padding: 0 15px;
+}
+
 .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  }
-  
-  .card-body {
-    padding: 20px;
+  border-radius: 1rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-img-top {
+  border-radius: 1rem ;
+  max-height: 500px; /* Ajuster la hauteur maximale de l'image */
+  object-fit: cover; /* Couvrir le conteneur en gardant les proportions */
+  object-position: center; /* Centrer le contenu de l'image */
+  width: 100%;
+  height: auto; /* Ajuster la hauteur automatiquement */
+}
+
+
+.card-title {
+  color: #082BCB;
+  font-weight: bold;
+  font-size: 22px;
+  text-align: center;
+}
+
+.card-subtitle {
+  color: #082BCB;
+  font-size: 20px;
+}
+
+.texte {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 18px;
+}
+
+.bi {
+  color: #082BCB;
+}
+
+.article-details {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.article-details img {
+  border-radius:1rem;
+}
+
+.btn-primary {
+  background-color: #082BCB;
+  color: #fff;
+  font-weight: bold;
+}
+
+.btnRetour {
+  width: 100%;
+  padding: 3%;
+  border: none;
+  cursor: pointer;
+  background: rgba(53, 59, 73, 0.9);
+}
+
+.btnRetour a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.btn-danger {
+  background-color: #8b0f0a;
+  color: #fff;
+}
+
+.comments-section h3 {
+  font-weight: bold;
+  color: #082BCB;
+}
+
+.form-control::placeholder{
+  color: white;
+  font-size: 16px;
+}
+
+.text-muted {
+  font-size: 14;
+}
+
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-comment p {
+  color: black;
+}
+
+.comments-section {
+  background-color: transparent;
+  border: 1px solid rgba(53, 59, 73, 0.9);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.comment-item {
+  border: 1px solid rgba(53, 59, 73, 0.9);
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.comment-content img {
+  margin-right: 15px;
+}
+
+.text-muted {
+  color: rgb(184, 183, 183);
+}
+
+.font-weight-bold {
+  color: white;
+}
+
+.form-group textarea {
+  background-color: rgba(53, 59, 73, 0.9);
+  border: 1px solid rgba(16, 46, 46, 1);
+  border-radius: 12px;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #082BCB;
+  border: none;
+}
+
+.btn-danger {
+  background-color: #8b0f0a;
+  border: none;
+}
+
+.btn i {
+  margin-right: 5px;
+}
+
+/* Styles pour les écrans larges */
+@media (min-width: 992px) {
+  .card-img-top {
+    border-radius: 1rem;
+    max-height: 700px; /* Ajuster la hauteur maximale de l'image */
+    object-fit: cover; /* Couvrir le conteneur en gardant les proportions */
+    object-position: center; /* Centrer le contenu de l'image */
+    width: 100%;
+    height: auto; /* Ajuster la hauteur automatiquement */
   }
   
   .card-title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #333;
+    font-size: 28px;
   }
   
-  .card-text {
-    font-size: 1.25rem;
-    color: #555;
+  .card-subtitle {
+    font-size: 24px;
   }
   
-  .btn-primary {
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+p{
+    font-size: 20px;
   }
   
-  .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004494;
+  .btnRetour {
+    width: 30%;
+    border-radius: 1rem;
+    padding: 1%;
+    border: none;
+    cursor: pointer;
+    background: rgba(53, 59, 73, 0.9);
   }
   
+  .btnRetour a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .form-group textarea {
+    font-size: 16px;
+    padding: 1.5rem;
+  }
+
+}
