@@ -59,14 +59,14 @@ input.form-control:focus {
 }
 
 .btn-danger {
-  background-color: transparent;
-  border-color: red;
+  background-color:#8b0f0a ;
+  border-color: #8b0f0a;
   border-radius: 50px;
 }
 
 .btn-danger:hover {
-  background-color: red;
-  border-color: red;
+  background-color: #8b0f0a;
+  border-color: #8b0f0a;
 }
 
 /* Style pour le texte de bienvenue */

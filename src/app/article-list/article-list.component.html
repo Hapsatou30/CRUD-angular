@@ -6,7 +6,15 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <form class="d-flex ms-2 me-auto my-2 my-lg-0">
         <div class="input-group">
-          <input type="text" class="form-control rounded-pill border-0 bg-light shadow-none px-5" placeholder=" Rechercher..." aria-label="Search ...">
+          <input 
+            type="text" 
+            class="form-control rounded-pill border-0 bg-light shadow-none px-5" 
+            placeholder=" Rechercher..." 
+            aria-label="Search ..."
+            [(ngModel)]="searchTerm" 
+            (input)="onSearch()"
+            name="searchTerm"
+          >
           <span class="input-group-text bg-light border-0 rounded-end">
             <i class="fas fa-search text-muted"></i> <!-- Icône de recherche -->
           </span>
@@ -17,20 +25,21 @@
       </div>
       <div class="navbar-nav">
         <button class="btn btn-custom mb-2 mb-lg-0" (click)="goToForm()">Ajouter un article</button>
-        <button class="btn btn-danger ms-2" (click)="logout()">Déconnexion</button>
+        <button class="btn btn-danger ms-2" (click)="logout()">
+          <i class="fas fa-power-off"></i>
+        </button>
+        
       </div>
     </div>
   </div>
 </nav>
 
 <div class="container mt-4">
-    <h1 >Liste des articles</h1>
-  
-
+  <h1>Liste des articles</h1>
   <div class="row">
     <div class="col-12">
       <div class="d-lg-flex flex-wrap">
-        <div *ngFor="let article of articles" class="card border-0 me-lg-4 mb-lg-0 mb-4">
+        <div *ngFor="let article of filteredArticles" class="card border-0 me-lg-4 mb-lg-0 mb-4">
           <div class="backgroundEffect"></div>
           <div class="pic">
             <img [src]="article.image_path" alt="{{ article.title }}" class="img-fluid">
@@ -43,7 +52,7 @@
             <p class="text-muted mt-3">{{ getExcerpt(article.body) }}</p>
             <div class="mt-auto d-flex align-items-center justify-content-between pb-3 my-2 fixed-footer">
               <div class="btn btn-primary d-flex justify-content-center align-items-center" (click)="goToDetails(article.id)">
-                <i class="fas fa-eye" style="font-size: 25px;  margin-right: 5px;" ></i> <!-- Icône d'œil -->
+                <i class="fas fa-eye" style="font-size: 25px; margin-right: 5px;"></i> <!-- Icône d'œil -->
               </div>              
               <div class="d-flex align-items-center">
                 <p class="admin mb-0">Auteur: {{ article.user?.name }}</p>
@@ -51,9 +60,7 @@
             </div>
           </div>
         </div>
-        
-        </div>
       </div>
     </div>
   </div>
-
+</div>
