@@ -6,11 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AuthService } from '../auth.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-article-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule,NgxPaginationModule],
   templateUrl: './article-list.component.html',
   styleUrls: ['./article-list.component.css']
 })
@@ -21,6 +22,7 @@ export class ArticleListComponent implements OnInit {
   articles: any[] = [];
   searchTerm: string = '';
   filteredArticles: any[] = [];
+  p: number = 1; // Page actuelle pour la pagination
 
   constructor(
     private crudService: CrudService, 

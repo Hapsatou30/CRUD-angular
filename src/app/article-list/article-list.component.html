@@ -39,7 +39,7 @@
   <div class="row">
     <div class="col-12">
       <div class="row">
-        <div *ngFor="let article of filteredArticles" class="col-lg-4 mb-4">
+        <div *ngFor="let article of filteredArticles | paginate: { itemsPerPage: 3, currentPage: p }" class="col-lg-4 mb-4">
           <div class="card border-0 h-100">
             <div class="backgroundEffect"></div>
             <div class="pic">
@@ -62,6 +62,8 @@
             </div>
           </div>
         </div>
+         <!-- Contrôles de pagination -->
+         <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>
   </div>
