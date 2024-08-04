@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { ArticleFormComponent } from './article-form/article-form.component';
-import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { ArticleEditComponent } from './article-edit/article-edit.component';
@@ -22,8 +21,6 @@ export const routes: Routes = [
   // Formulaire de modification d'un article (accessible uniquement pour les utilisateurs authentifiés)
   { path: 'articles/edit/:id', component: ArticleEditComponent, canActivate: [AuthGuard] },
 
-  // Inscription
-  { path: 'register', component: RegisterComponent },
 
   // Connexion
   { path: 'login', component: LoginComponent },

@@ -1,34 +1,101 @@
-<div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            <h3>Connexion</h3>
-          </div>
-          <div class="card-body">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" formControlName="email" type="email" class="form-control" />
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion / Inscription</title>
+  <!-- Inclusion de Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+ 
+</head>
+
+<body>
+  <div class="container">
+    <div class="login-wrap">
+      <div class="login-html">
+        <!-- Onglets pour la connexion et l'inscription -->
+        <input id="tab-1" type="radio" name="tab" class="sign-in" [checked]="showLogin">
+        <label for="tab-1" class="tab" (click)="showLoginForm()">Connexion</label>
+        <input id="tab-2" type="radio" name="tab" class="sign-up" [checked]="!showLogin">
+        <label for="tab-2" class="tab" (click)="showRegisterForm()">Inscription</label>
+
+        <!-- Formulaire de connexion -->
+        <div class="login-form">
+          <div class="sign-in-htm" *ngIf="showLogin">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+              <div class="group">
+                <label for="login-email" class="label">
+                  <i class="fa-solid fa-envelope"></i> Email
+                </label>
+                <input id="login-email" formControlName="email" type="email" class="input" />
                 <div *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)" class="invalid-feedback">
                   L'email est requis et doit être valide.
                 </div>
               </div>
-              <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input id="password" formControlName="password" type="password" class="form-control" />
+              <div class="group">
+                <label for="login-password" class="label">
+                  <i class="fa-solid fa-lock"></i> Mot de passe
+                </label>
+                <input id="login-password" formControlName="password" type="password" class="input" />
                 <div *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)" class="invalid-feedback">
                   Le mot de passe est requis.
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Se connecter</button>
+              <div class="group">
+                <button type="submit" class="button" [disabled]="loginForm.invalid">Se connecter</button>
+              </div>
+              <div class="hr"></div>
+              <div class="foot-lnk">
+                <a href="#forgot">Mot de passe oublié ?</a>
+              </div>
             </form>
           </div>
-          <div class="card-footer text-center">
-            <p>Pas de compte ? <a routerLink="/register">S'inscrire</a></p>
+
+          <!-- Formulaire d'inscription -->
+          <div class="sign-up-htm" *ngIf="!showLogin">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
+              <div class="group">
+                <label for="register-name" class="label">
+                  <i class="fa-solid fa-user"></i> Nom
+                </label>
+                <input id="register-name" formControlName="name" type="text" class="input" />
+                <div *ngIf="registerForm.controls['name'].invalid && (registerForm.controls['name'].dirty || registerForm.controls['name'].touched)" class="invalid-feedback">
+                  Le nom est requis.
+                </div>
+              </div>
+              <div class="group">
+                <label for="register-email" class="label">
+                  <i class="fa-solid fa-envelope"></i> Email
+                </label>
+                <input id="register-email" formControlName="email" type="email" class="input" />
+                <div *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)" class="invalid-feedback">
+                  L'email est requis et doit être valide.
+                </div>
+              </div>
+              <div class="group">
+                <label for="register-password" class="label">
+                  <i class="fa-solid fa-lock"></i> Mot de passe
+                </label>
+                <input id="register-password" formControlName="password" type="password" class="input" />
+                <div *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)" class="invalid-feedback">
+                  Le mot de passe est requis et doit comporter au moins 8 caractères.
+                </div>
+              </div>
+              <div class="group">
+                <button type="submit" class="button" [disabled]="registerForm.invalid">S'inscrire</button>
+              </div>
+              <div class="hr"></div>
+              <div class="foot-lnk">
+                <label for="tab-1">Déjà un compte ? Se connecter</label>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+</body>
+
+</html>
