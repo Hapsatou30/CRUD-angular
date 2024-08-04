@@ -12,7 +12,7 @@
   <div class="container mt-4">
     <div class="card shadow-sm">
       <!-- Partie de l'image -->
-      <img *ngIf="article.image_path" [src]="article.image_path" alt="Image de l'article" class="card-img-top" />
+      <img *ngIf="article?.image_path" [src]="article.image_path" alt="Image de l'article" class="card-img-top" />
       
       <div class="card-body">
         <h1 class="card-title mb-4">Détails de l'article</h1>
@@ -58,9 +58,9 @@
             <ul class="list-unstyled">
               <li *ngFor="let comment of comments" class="comment-item mb-3">
                 <div class="comment-content d-flex align-items-start">
-                  <img [src]="comment.user.avatar || 'https://i.imgur.com/CFpa3nK.jpg'" alt="Avatar" class="rounded-circle me-3" width="40" height="40">
+                  <img [src]="comment.user?.avatar || 'https://i.imgur.com/CFpa3nK.jpg'" alt="Avatar" class="rounded-circle me-3" width="40" height="40">
                   <div class="text-comment">
-                    <p class="mb-1">Auteur: {{ comment.user.name || 'Utilisateur inconnu' }}</p>
+                    <p class="mb-1">Auteur: {{ comment.user?.name || 'Utilisateur inconnu' }}</p>
                     <p class="font-weight-bold mb-2">{{ comment.comment }}</p>
                     <p class="text-muted mb-2"><small>{{ formatDate(comment.created_at) }}</small></p>
                     <button *ngIf="comment.user_id === userId" class="btn btn-danger" (click)="deleteComment(comment.id)">
